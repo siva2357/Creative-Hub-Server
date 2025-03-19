@@ -45,13 +45,13 @@ mongoose.connect(process.env.MONGO_URI)
     });
 
 // API Routes
-app.use('/api/auth', authRouter);
-app.use('/api',universityRouter);
-app.use('/api',companyRouter);
-app.use('/api',recruiterProfileRouter);
-app.use('/api',jobPostRouter);
-app.use('/api',seekerProfileRouter);
-app.use('/api',projectUploadRouter);
+app.use('/auth', authRouter);
+app.use('/',universityRouter);
+app.use('/',companyRouter);
+app.use('/',recruiterProfileRouter);
+app.use('/',jobPostRouter);
+app.use('/',seekerProfileRouter);
+app.use('/',projectUploadRouter);
 
 
 // Root Endpoint
