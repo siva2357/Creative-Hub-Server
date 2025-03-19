@@ -18,7 +18,7 @@ const app = express();
 
 // CORS Configuration
 app.use(cors({
-    origin: 'http://localhost:4300', // Allow requests from Angular app
+    origin: 'https://creative-hub-8d4da.web.app', // Allow requests from Angular app
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], // Allowed methods
     credentials: true, // Allow credentials (cookies, etc.)
 }));
