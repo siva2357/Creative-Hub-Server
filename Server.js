@@ -16,11 +16,14 @@ const projectUploadRouter = require("./project-upload/projectUploadRoutes");
 
 const app = express();
 
+
+
 app.use(cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:4200',
+    origin: ['http://localhost:4200', 'https://creative-hub-8d4da.web.app'], // Allow both local and deployed frontend URLs
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-    credentials: true,
+    credentials: true, // Allow credentials (cookies, headers)
 }));
+
 
 
 // app.use(cors()); // This allows all origins and methods (use cautiously in production).
@@ -35,15 +38,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
+// Choose the correct MongoDB URI based on the environment
+const mongoUri = process.env.NODE_ENV === 'production' ? process.env.MONGO_URI : process.env.MONGO_URI_LOCAL;
 
 // MongoDB Connection with Error Handling
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(mongoUri)
     .then(() => console.log("Database connected"))
     .catch(err => {
         console.error("MongoDB connection error:", err);
-        process.exit(1);
+        process.exit(1); // Exit if connection fails
     });
-
 // API Routes
 app.use('/', authRouter);
 app.use('/',universityRouter);
