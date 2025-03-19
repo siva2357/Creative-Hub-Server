@@ -16,15 +16,14 @@ const projectUploadRouter = require("./project-upload/projectUploadRoutes");
 
 const app = express();
 
-// CORS Configuration
-// app.use(cors({
-//     origin: 'https://creative-hub-8d4da.web.app', // Allow requests from Angular app
-//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], // Allowed methods
-//     credentials: true, // Allow credentials (cookies, etc.)
-// }));
+app.use(cors({
+    origin: process.env.FRONTEND_URL || 'https://creative-hub-8d4da.web.app',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+    credentials: true,
+}));
 
 
-app.use(cors()); // This allows all origins and methods (use cautiously in production).
+// app.use(cors()); // This allows all origins and methods (use cautiously in production).
 
 
 app.use(helmet({
@@ -65,7 +64,7 @@ app.get('/', (req, res) => {
 //     console.log(`Server started on port ${process.env.PORT}`);
 // });
 
-const PORT = process.env.PORT || 4000; // Ensure Render assigns the port dynamically
+const PORT = process.env.PORT || 3000; // Ensure Render assigns the port dynamically
 
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`✅ Server started on port ${PORT}`);
