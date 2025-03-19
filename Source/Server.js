@@ -16,9 +16,8 @@ const projectUploadRouter = require("./project-upload/projectUploadRoutes");
 
 const app = express();
 
-
 app.use(cors({
-    origin: ['https://creative-hub-8d4da.web.app', 'http://localhost:4200'],
+    origin: process.env.FRONTEND_URL || 'http://localhost:4200',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     credentials: true,
 }));
@@ -46,14 +45,13 @@ mongoose.connect(process.env.MONGO_URI)
     });
 
 // API Routes
-app.use('/auth', authRouter);
-app.use('/universities', universityRouter);
-app.use('/companies', companyRouter);
-app.use('/recruiters', recruiterProfileRouter);
-app.use('/jobs', jobPostRouter);
-app.use('/seekers', seekerProfileRouter);
-app.use('/projects', projectUploadRouter);
-
+app.use('/', authRouter);
+app.use('/',universityRouter);
+app.use('/',companyRouter);
+app.use('/',recruiterProfileRouter);
+app.use('/',jobPostRouter);
+app.use('/',seekerProfileRouter);
+app.use('/',projectUploadRouter);
 
 
 // Root Endpoint

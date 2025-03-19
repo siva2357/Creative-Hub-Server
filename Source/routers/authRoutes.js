@@ -12,36 +12,36 @@ const forgotPasswordController = require('../forgot-password-otp/forgotPasswordC
 
 
 // ========================= OTP Routes =========================
-router.patch('/send-verification-code', otpController.sendVerificationCode);
-router.patch('/verify-verification-code', otpController.verifyCode);
+router.patch('/auth/send-verification-code', otpController.sendVerificationCode);
+router.patch('/auth/verify-verification-code', otpController.verifyCode);
 
-router.patch('/forgot-password-code', forgotPasswordController.sendForgotPasswordCode);
-router.patch('/verify-forgotPassword-code', forgotPasswordController.verifyForgotPasswordCode);
-router.patch('/reset-password', forgotPasswordController.resetPassword);
+router.patch('/auth/forgot-password-code', forgotPasswordController.sendForgotPasswordCode);
+router.patch('/auth/verify-forgotPassword-code', forgotPasswordController.verifyForgotPasswordCode);
+router.patch('/auth/reset-password', forgotPasswordController.resetPassword);
 // ========================= Login Route =========================
-router.post('/login/user', loginController.login);
-router.post('/logout/user',  identifier,loginController.logout);
+router.post('/auth/login/user', loginController.login);
+router.post('/auth/logout/user',  identifier,loginController.logout);
 
 // ========================= Admin Routes =========================
 // router.post('/admin/signup', adminController.signup);
-router.post('/admin/signout', identifier, adminController.signout);
-router.get('/admin/:id', identifier, adminController.getAdminById);
+router.post('/auth/admin/signout', identifier, adminController.signout);
+router.get('/auth/admin/:id', identifier, adminController.getAdminById);
 
 
 // ========================= Recruiter Routes =========================
-router.post('/recruiter/signup', recruiterController.signup);
-router.patch('/recruiter/:id/change-password', identifier, recruiterController.changePassword);
-router.post('/recruiter/signout', identifier, recruiterController.signout);
-router.get('/recruiters', recruiterController.getAllRecruiters);
-router.get('/recruiter/:id', identifier, recruiterController.getRecruiterById);
-router.delete('/recruiter/:id/delete', identifier, recruiterController.deleteRecruiterById);
+router.post('/auth/recruiter/signup', recruiterController.signup);
+router.patch('/auth/recruiter/:id/change-password', identifier, recruiterController.changePassword);
+router.post('/auth/recruiter/signout', identifier, recruiterController.signout);
+router.get('/auth/recruiters', recruiterController.getAllRecruiters);
+router.get('/auth/recruiter/:id', identifier, recruiterController.getRecruiterById);
+router.delete('/auth/recruiter/:id/delete', identifier, recruiterController.deleteRecruiterById);
 
 // ========================= Seeker Routes =========================
-router.post('/seeker/signup', seekerController.signup);
-router.patch('/seeker/:id/change-password', identifier, seekerController.changePassword);
-router.post('/seeker/signout', identifier, seekerController.signout);
-router.get('/seekers', seekerController.getAllSeekers);
-router.get('/seeker/:id', identifier, seekerController.getSeekerById);
-router.delete('/seeker/:id/delete', identifier, seekerController.deleteSeekerById);
+router.post('/auth/seeker/signup', seekerController.signup);
+router.patch('/auth/seeker/:id/change-password', identifier, seekerController.changePassword);
+router.post('/auth/seeker/signout', identifier, seekerController.signout);
+router.get('/auth/seekers', seekerController.getAllSeekers);
+router.get('/auth/seeker/:id', identifier, seekerController.getSeekerById);
+router.delete('/auth/seeker/:id/delete', identifier, seekerController.deleteSeekerById);
 
 module.exports = router;
