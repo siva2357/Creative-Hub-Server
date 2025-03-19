@@ -17,13 +17,13 @@ const projectUploadRouter = require("./project-upload/projectUploadRoutes");
 const app = express();
 
 // CORS Configuration
-app.use(cors({
-    origin: 'https://creative-hub-8d4da.web.app', // Allow requests from Angular app
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], // Allowed methods
-    credentials: true, // Allow credentials (cookies, etc.)
-}));
+// app.use(cors({
+//     origin: 'https://creative-hub-8d4da.web.app', // Allow requests from Angular app
+//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], // Allowed methods
+//     credentials: true, // Allow credentials (cookies, etc.)
+// }));
 
-// app.use(cors()); // This allows all origins and methods (use cautiously in production).
+app.use(cors()); // This allows all origins and methods (use cautiously in production).
 
 
 app.use(helmet({
