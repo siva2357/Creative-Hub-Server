@@ -3,7 +3,7 @@ const seeker = require('../models/seekerModel');
 const recruiter = require('../models/recruiterModel');
 const transport = require("../middleware/sendMail");
 const { hmacProcess } = require("../utils/hashing");
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 // ✅ Validation schema for OTP and email
 exports.acceptFpCodeSchema = joi.object({

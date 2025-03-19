@@ -1,6 +1,6 @@
 const { signupSchema, changePasswordSchema,  } = require("../middleware/validator");
 const seeker  = require('../models/seekerModel');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 exports.signup = async (req, res) => {
     const { registrationDetails, role } = req.body;

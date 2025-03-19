@@ -1,6 +1,6 @@
 const { signupSchema} = require("../middleware/validator");
 const admin = require('../models/adminModel');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 
 const defaultAdmin = {
