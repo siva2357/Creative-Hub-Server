@@ -16,8 +16,9 @@ const projectUploadRouter = require("./project-upload/projectUploadRoutes");
 
 const app = express();
 
+
 app.use(cors({
-    origin: process.env.FRONTEND_URL || 'https://creative-hub-8d4da.web.app',
+    origin: ['https://creative-hub-8d4da.web.app', 'http://localhost:4200'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     credentials: true,
 }));
