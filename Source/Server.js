@@ -23,6 +23,7 @@ const app = express();
 //     credentials: true, // Allow credentials (cookies, etc.)
 // }));
 
+
 app.use(cors()); // This allows all origins and methods (use cautiously in production).
 
 
