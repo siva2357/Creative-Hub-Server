@@ -34,6 +34,8 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
+
 // MongoDB Connection with Error Handling
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log("Database connected"))
@@ -57,7 +59,13 @@ app.get('/', (req, res) => {
     res.json({ message: "Hello from the server" });
 });
 
-// Start Server with Port Fallback
-app.listen(process.env.PORT , () => {
-    console.log(`Server started on port ${process.env.PORT}`);
+// // Start Server with Port Fallback
+// app.listen(process.env.PORT , () => {
+//     console.log(`Server started on port ${process.env.PORT}`);
+// });
+
+const PORT = process.env.PORT || 4000; // Ensure Render assigns the port dynamically
+
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`✅ Server started on port ${PORT}`);
 });
