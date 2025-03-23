@@ -25,8 +25,7 @@ router.post('/auth/logout/user',  identifier,loginController.logout);
 // ========================= Admin Routes =========================
 // router.post('/admin/signup', adminController.signup);
 router.post('/auth/admin/signout', identifier, adminController.signout);
-router.get('/auth/admin/:id', identifier, adminController.getAdminById);
-
+router.get('/admin/:id', identifier, adminController.getAdminById);
 
 // ========================= Recruiter Routes =========================
 router.post('/auth/recruiter/signup', recruiterController.signup);
