@@ -18,12 +18,13 @@ const app = express();
 
 
 
-app.use(cors({
-    origin: ['http://localhost:4200', 'https://creative-hub-8d4da.web.app'], // Allow both local and deployed frontend URLs
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-    credentials: true, // Allow credentials (cookies, headers)
-}));
 
+app.use(cors({
+    origin: process.env.FRONTEND_URL || 'http://localhost:4200', // Local or production URL
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+    credentials: true,
+  }));
+  
 
 
 
