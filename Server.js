@@ -26,7 +26,6 @@ app.use(cors({
 
 
 
-// app.use(cors()); // This allows all origins and methods (use cautiously in production).
 
 
 app.use(helmet({
