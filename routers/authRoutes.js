@@ -34,12 +34,15 @@ router.post('/auth/recruiter/signout', identifier, recruiterController.signout);
 router.get('/recruiters', recruiterController.getAllRecruiters);
 router.get('/recruiter/:id', identifier, recruiterController.getRecruiterById);
 router.delete('/auth/recruiter/:id/delete', identifier, recruiterController.deleteRecruiterById);
+router.get('/recruiter/:recruiterId/seekerData', recruiterController.getCompleteSeekerData);
+router.get('/recruiter/:recruiterId/seekerData/:seekerId/profileData', recruiterController.getSeekerDataById);
 
 // ========================= Seeker Routes =========================
 router.post('/auth/seeker/signup', seekerController.signup);
 router.patch('/auth/seeker/:id/change-password', identifier, seekerController.changePassword);
 router.post('/auth/seeker/signout', identifier, seekerController.signout);
 router.get('/seekers', seekerController.getAllSeekers);
+
 router.get('/seeker/:id', identifier, seekerController.getSeekerById);
 router.delete('/auth/seeker/:id/delete', identifier, seekerController.deleteSeekerById);
 

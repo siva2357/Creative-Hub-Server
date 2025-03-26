@@ -6,18 +6,24 @@ const Seeker = require('../models/seekerModel');
 exports.createProjectUpload = async (req, res) => {
   try {
       const { projectDetails } = req.body;
-      if (! projectDetails) {
+      if (!projectDetails) {
           return res.status(400).json({ message: "Project details are required" });
       }
       if (!req.seekerId) {
           return res.status(401).json({ message: "Unauthorized: Seeker ID is missing" });
       }
+
+      // ✅ Ensure that `softwares` and `tags` are stored as arrays
+      projectDetails.softwares = Array.isArray(projectDetails.softwares) ? projectDetails.softwares : [projectDetails.softwares];
+      projectDetails.tags = Array.isArray(projectDetails.tags) ? projectDetails.tags : [projectDetails.tags];
+
       const newProject = new ProjectUpload({
           seekerId: req.seekerId,
           projectDetails
       });
-      await  newProject.save();
-      res.status(201).json({ message: "Company created successfully", project:  newProject });
+      
+      await newProject.save();
+      res.status(201).json({ message: "Project created successfully", project: newProject });
   } catch (error) {
       res.status(500).json({ message: error.message });
   }
@@ -25,17 +31,25 @@ exports.createProjectUpload = async (req, res) => {
 
 
 
+
 exports.updateProject = async (req, res) => {
   try {
     const { projectId, seekerId } = req.params;
     const existingProject = await ProjectUpload.findOne({ _id: projectId, seekerId });
-    if (!existingProject ) {
-      return res.status(404).json({ message: "Project not found for this recruiter" });
+    
+    if (!existingProject) {
+      return res.status(404).json({ message: "Project not found for this seeker" });
     }
+
     const updatedProjectDetails = {
-      ...existingProject. projectDetails,
-      ...req.body. projectDetails,
+      ...existingProject.projectDetails,
+      ...req.body.projectDetails,
     };
+
+    // ✅ Ensure `softwares` and `tags` are stored as arrays
+    updatedProjectDetails.softwares = Array.isArray(updatedProjectDetails.softwares) ? updatedProjectDetails.softwares : [updatedProjectDetails.softwares];
+    updatedProjectDetails.tags = Array.isArray(updatedProjectDetails.tags) ? updatedProjectDetails.tags : [updatedProjectDetails.tags];
+
     const updatedProject = await ProjectUpload.findByIdAndUpdate(
       projectId,
       { $set: { projectDetails: updatedProjectDetails } },
@@ -45,9 +59,10 @@ exports.updateProject = async (req, res) => {
     res.status(200).json({ message: "Project updated successfully", project: updatedProject });
 
   } catch (error) {
-    res.status(500).json({ message: "Error updating job post", error: error.message });
+    res.status(500).json({ message: "Error updating project", error: error.message });
   }
 };
+
 
 
 exports.deleteProject = async (req, res) => {

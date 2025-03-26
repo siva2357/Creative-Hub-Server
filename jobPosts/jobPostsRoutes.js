@@ -12,7 +12,7 @@ router.put("/recruiter/:recruiterId/jobPost/:jobId/reopen", identifier, jobPostC
 
 router.delete("/recruiter/:recruiterId/jobPost/:jobId/delete", identifier, jobPostController.deleteJobPost);
 
-router.get("/seeker/jobPosts", identifier,jobPostController.getAllJobs);
+router.get("/seeker/:seekerId/jobPosts", identifier,jobPostController.getAllJobs);
 router.get("/seeker/jobPost/:jobId", identifier,jobPostController.getJobById);
 
 

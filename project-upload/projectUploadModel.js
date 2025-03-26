@@ -11,9 +11,9 @@ const uploadSchema = new mongoose.Schema({
     projectType: { type: String, required: true, enum: ['Art Concepts', '3D Environment', '3D Animations', 'Game Development', 'AR/VR']
     },
     projectDescription: { type: String, required: true },
-    softwares: { type: String, required: true },
-    tags: { type: String },
-  }
+    softwares: [{ type: String,required: true }],
+    tags: [{ type: String,required: true }],  
+    }
 }, { timestamps: true }); // Adds createdAt & updatedAt automatically
 
 module.exports = mongoose.model('ProjectUpload', uploadSchema);

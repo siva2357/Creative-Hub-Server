@@ -1,6 +1,9 @@
 const { signupSchema, changePasswordSchema,  } = require("../middleware/validator");
 const seeker  = require('../models/seekerModel');
 const bcrypt = require('bcryptjs');
+const SeekerProfile = require('../profile-details/seekerProfileModel');
+const ProjectUpload = require('../project-upload/projectUploadModel');
+const mongoose = require('mongoose');
 
 exports.signup = async (req, res) => {
     const { registrationDetails, role } = req.body;
@@ -84,6 +87,14 @@ exports.getAllSeekers = async (req, res) => {
 
 
 
+
+
+
+
+
+
+
+
 // Get recruiter by ID
 exports.getSeekerById = async (req, res) => {
     try {
@@ -97,14 +108,33 @@ exports.getSeekerById = async (req, res) => {
     }
 };
 
-// Delete recruiter by ID
+// // Delete recruiter by ID
+// exports.deleteSeekerById = async (req, res) => {
+//     try {
+//         const Seeker = await seeker.findByIdAndDelete(req.params.id);
+//         if (!Seeker) {
+//             return res.status(404).json({ message: 'Seeker not found' });
+//         }
+//         res.status(200).json({ message: 'Seeker deleted successfully' });
+//     } catch (error) {
+//         res.status(500).json({ message: error.message });
+//     }
+// };
+
+
+
 exports.deleteSeekerById = async (req, res) => {
     try {
-        const Seeker = await seeker.findByIdAndDelete(req.params.id);
-        if (!Seeker) {
-            return res.status(404).json({ message: 'Seeker not found' });
+        const seekerId = req.params.id;
+        const foundSeeker = await seeker.findById(seekerId);
+        if (!foundSeeker) {
+            return res.status(404).json({ message: "Seeker not found" });
         }
-        res.status(200).json({ message: 'Seeker deleted successfully' });
+        await ProjectUpload.deleteMany({ seekerId });
+        await SeekerProfile.deleteMany({ seekerId });
+        await seeker.findByIdAndDelete(seekerId);
+
+        res.status(200).json({ message: "Seeker and related data deleted successfully" });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
