@@ -26,6 +26,8 @@ router.get("/recruiter/:recruiterId/jobPosts/Applicants",  jobPostController.get
 router.post("/seeker/:seekerId/job-post/:jobId/apply",identifier, jobPostController.applyForJob);
 router.post("/seeker/:seekerId/job-post/:jobId/withdraw", identifier,jobPostController.withdrawApplication);
 router.get("/seeker/:seekerId/applied-jobs", jobPostController.getAppliedJobs);
+router.get("/seeker/:seekerId/applied-job/:jobId", jobPostController.getAppliedJobById);
+
 router.get("/recruiter/:recruiterId/jobpost/:jobId/applicants",  jobPostController.getJobApplicants);
 
 

@@ -68,9 +68,6 @@ exports.createJobPost = async (req, res) => {
 };
 
 
-
-
-
 // ✅ Update Job Post
 exports.updateJobPost = async (req, res) => {
   try {
@@ -231,35 +228,43 @@ exports.getClosedJobsByRecruiter = async (req, res) => {
   }
 };
 
-// ✅ Get a Single Job Post by ID
 exports.getJobById = async (req, res) => {
   try {
     const { jobId } = req.params;
 
     const job = await JobPost.findById(jobId)
-      .populate("companyId", "companyDetails") // Fetch company details
-      .populate("recruiterId", "profileDetails.firstName profileDetails.lastName profileDetails.email"); // Fetch recruiter details
+      .populate("companyId", "companyDetails") // ✅ Fetch company details
+      .lean();
 
-    if (!job) return res.status(404).json({ message: "Job post not found" });
-
-    // ✅ If recruiterId is null, return default values
-    if (!job.recruiterId) {
-      return res.status(200).json({
-        ...job.toObject(),
-        recruiterId: { profileDetails: { basicDetails: { firstName: "N/A", lastName: "N/A" }, contactDetails: { email: "N/A" } } }
-      });
+    if (!job) {
+      return res.status(404).json({ message: "Job post not found" });
     }
+
+    // ✅ Fetch recruiter profile only (Excluding recruiterId completely)
+    const recruiterProfile = await RecruiterProfile.findOne({ recruiterId: job.recruiterId }).lean();
+
+    // ✅ Attach recruiter profile and remove recruiterId
+    job.recruiterProfile = recruiterProfile || {};
+    delete job.recruiterId;
 
     res.status(200).json(job);
   } catch (error) {
+    console.error("Error fetching job post:", error);
     res.status(500).json({ message: "Error fetching job post", error: error.message });
   }
 };
 
 
+
+
+
+
+
+
 exports.getAllJobs = async (req, res) => {
   try {
-    const jobs = await JobPost.find().populate("recruiterId").populate("companyId");
+    const jobs = await JobPost.find().populate("recruiterId").populate("companyId", "companyDetails") // Fetch company details
+    ;
 
 console.log("Jobs after populate:", jobs); // Log the populated jobs
 
@@ -355,6 +360,24 @@ exports.getAppliedJobs = async (req, res) => {
     res.status(500).json({ message: "Error fetching applied jobs", error });
   }
 };
+
+exports.getAppliedJobById = async (req, res) => {
+  try {
+    const { seekerId, jobId } = req.params;
+
+    // Find the job post and check if the seeker has applied
+    const job = await JobPost.findOne({ _id: jobId, "applicants.seekerId": seekerId });
+
+    if (!job) {
+      return res.status(200).json({ isApplied: false });
+    }
+
+    res.status(200).json({ isApplied: true });
+  } catch (error) {
+    res.status(500).json({ message: "Error checking applied job", error });
+  }
+};
+
 
 
 exports.getJobApplicantsByRecruiter = async (req, res) => {
